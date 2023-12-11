@@ -13,8 +13,8 @@ import java.util.List;
  * EXAMEN DE ACCESO A DATOS
  * Diciembre 2023
  *
- * Nombre del alumno:
- * Fecha:
+ * Nombre del alumno: Francisco Leonel Soriano Hernandez
+ * Fecha: 11/12/2023
  */
 
 @Log
@@ -44,7 +44,10 @@ public class ClientDAO implements DAO<Client> {
     public List<Client> getAll() {
         var out = new ArrayList<Client>();
 
-        /* Implement method here */
+        try (Session sesion = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Client> query = sesion.createQuery("from Client ", Client.class);
+            out = (ArrayList<Client>) query.getResultList();
+        }
 
         return out;
     }

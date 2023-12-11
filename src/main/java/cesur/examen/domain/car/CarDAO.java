@@ -2,6 +2,7 @@ package cesur.examen.domain.car;
 
 import cesur.examen.common.DAO;
 import cesur.examen.common.HibernateUtil;
+import cesur.examen.domain.client.Client;
 import lombok.extern.java.Log;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -14,17 +15,32 @@ import java.util.List;
  * EXAMEN DE ACCESO A DATOS
  * Diciembre 2023
  *
- * Nombre del alumno:
- * Fecha:
+ * Nombre del alumno: Francisco Leonel Soriano Hernandez
+ * Fecha: 11/12/2023
  */
 
 @Log
 public class CarDAO implements DAO<Car> {
+    /* Implement method here */
     @Override
     public Car save(Car car) {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Transaction transaction = null;
+            try {
 
-        /* Implement method here */
+                transaction = session.beginTransaction();
 
+                session.save(car);
+
+                transaction.commit();
+            } catch (Exception e) {
+
+                if (transaction != null) {
+                    transaction.rollback();
+                }
+                e.printStackTrace();
+            }
+        }
         return car;
     }
 
@@ -48,12 +64,16 @@ public class CarDAO implements DAO<Car> {
         return null;
     }
 
-    public List<Car> getAllByManufacturer(String manufacturer){
+    public static List<Car> getAllByManufacturer(String manufacturer){
         var out = new ArrayList<Car>();
-
-
         /* Implement method here */
 
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            Query<Car> query = session.createQuery("from Car where manufacturer = :manufacturer", Car.class);
+            query.setParameter("manufacturer", manufacturer);
+
+            out = (ArrayList<Car>) query.getResultList();
+        }
         return out;
     }
 

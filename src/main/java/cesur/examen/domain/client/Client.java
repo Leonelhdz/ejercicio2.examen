@@ -12,20 +12,27 @@ import java.util.List;
  * EXAMEN DE ACCESO A DATOS
  * Diciembre 2023
  *
- * Nombre del alumno:
- * Fecha:
+ * Nombre del alumno: Francisco Leonel Soriano Hernandez
+ * Fecha: 11/12/2023
  */
 
 
 @Data
+@Entity
+@Table(name = "cliente")
 public class Client implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "nombre")
     private String name;
 
+    @Column(name = "email")
     private String email;
 
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private List<Car> cars = new ArrayList<Car>(0);
 
     /**
