@@ -3,7 +3,6 @@ package cesur.examen.domain.car;
 import cesur.examen.domain.client.Client;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
 
 import java.io.Serializable;
 

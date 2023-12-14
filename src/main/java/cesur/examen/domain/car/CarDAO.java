@@ -2,7 +2,6 @@ package cesur.examen.domain.car;
 
 import cesur.examen.common.DAO;
 import cesur.examen.common.HibernateUtil;
-import cesur.examen.domain.client.Client;
 import lombok.extern.java.Log;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
